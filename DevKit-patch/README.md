@@ -1,5 +1,5 @@
 DevKit
-(proprietary, msm-4.19) patches to deploy the kernel and vendor modifications to the DevKit in order to install the new peripherals, display and camera.
+(proprietary, msm-4.19) patches to deploy the modifications to the DevKit in order to install the new peripherals, display and camera.
 
 For the deployment, you can use the hard copy scripts or the patches.
 For a hard copy patch deployment, please use the copy_*_mods.sh scripts
