@@ -1,0 +1,50 @@
+https://community.toradex.com/t/torizoncore-i2c-driver-for-the-accelerometer-gyroscope-sensor/18191
+
+CONFIG_INV_ICM42600_I2C
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/drivers/iio/imu/inv_icm42600
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/arch/arm64/configs
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/common/arch/arm64/configs
+
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/build.config.msm.kona
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/common/arch/arm64/configs/consolidate.fragment
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/arch/arm64/configs/consolidate.fragment
+
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/common/arch/arm64/configs/consolidate_defconfig
+
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/common/drivers/iio/imu/inv_icm42600
+
+
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/common/drivers/iio/imu/inv_icm42600/inv_icm42600.h
+
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/out/msm-kernel-kona-consolidate/gki_kernel/common/drivers/iio/imu/inv_icm42600/inv-icm42600.ko
+/media/bruno/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/out/msm-kernel-kona-consolidate/gki_kernel/common/drivers/iio/imu/inv_icm42600/inv-icm42600-i2c.ko
+
+/home/turbox/workspace/T7/devkit/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/out/msm-kernel-kona-consolidate/gki_kernel/common/drivers/iio/imu/inv_icm42600/inv-icm42600-i2c.ko
+
+/media/bruno/T7/devkit.back/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/qcom/proprietary/devicetree/bindings/iio/imu/invensense,icm42600.yaml
+/media/bruno/T7/devkit.back/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/arch/arm64/boot/dts/vendor/qcom/kona.dtsi
+/media/bruno/T7/devkit.back/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/arch/arm64/boot/dts/vendor/qcom/kona-iot-turbox865c.dts
+/media/bruno/T7/devkit.back/LA.VENDOR.13.2.2/LINUX/android/kernel_platform/msm-kernel/arch/arm64/boot/dts/vendor/qcom/kona-iot-v2.1-turbox865c-overlay.dts
+
+
+/home/turbox/workspace/T7/devkit-1.1-FC/LINUX/android/kernel/msm-4.19/arch/arm64/configs/vendor/kona_defconfig
+
+##################################################
+## Device tree
+##################################################
+ #include <dt-bindings/gpio/gpio.h>
+    #include <dt-bindings/interrupt-controller/irq.h>
+    i2c0 {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        icm42605@68 {
+          compatible = "invensense,icm42605";
+          reg = <0x68>;
+          interrupt-parent = <&gpio2>;
+          interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
+          vdd-supply = <&vdd>;
+          vddio-supply = <&vddio>;
+        };
+    };
+

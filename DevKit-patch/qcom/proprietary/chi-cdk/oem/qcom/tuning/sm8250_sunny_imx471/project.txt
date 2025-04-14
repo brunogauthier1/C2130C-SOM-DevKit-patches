@@ -1,0 +1,12 @@
+CurrentProjectScenarioName=Default
+TargetName=SXR2130
+ISPName=Spectra480
+SensorType=Bayer
+MFNREnable=0
+MFNRNumFrames=3
+VideoNumFrames=1
+UseCustomTriggers=False
+GenerateMeta=True
+DisablePresetWarning=False
+DisableParameterOutOfSyncWarning=False
+ParameterParser=C:\Qualcomm\Chromatix7\7.3.1.18\Simulator\Spectra480\ParameterParser.exe

@@ -1,0 +1,82 @@
+sensor_drivers:
+##
+# ACHEUL
+##
+- com.qti.sensormodule.sunny_imx471_0:
+    - sensor/imx471/imx471_sensor.xml
+    - module/sunny_imx471_module_0.xml
+
+- com.qti.sensormodule.sunny_imx471_1:
+    - sensor/imx471/imx471_sensor.xml
+    - module/sunny_imx471_module_1.xml
+
+- com.qti.sensormodule.amtran_lt6911uxc:
+    - sensor/lt6911uxc/lt6911uxc_sensor.xml
+    - module/amtran_lt6911uxc_module.xml
+
+- com.qti.sensormodule.truly_s5kgw1_cphy:
+    - sensor/s5kgw1_cphy/s5kgw1_cphy_sensor.xml
+    - module/truly_s5kgw1_cphy_module.xml
+    - actuator/dz30m648_actuator.xml
+
+- com.qti.sensormodule.altek1_imx577:
+    - sensor/imx577/imx577_sensor.xml
+    - module/altek1_imx577_module.xml
+
+- com.qti.sensormodule.altek2_imx577:
+    - sensor/imx577/imx577_sensor.xml
+    - module/altek2_imx577_module.xml
+
+- com.qti.sensormodule.altek3_imx577:
+    - sensor/imx577/imx577_sensor.xml
+    - module/altek3_imx577_module.xml
+
+facedetection_binaries:
+- fdconfigvideo:
+    - fd/fdconfigdata.xml
+
+- fdconfigvideolite:
+    - fd/fdconfigdata.xml
+
+- fdconfigpreview:
+    - fd/fdconfigdata.xml
+
+- fdconfigpreviewlite:
+    - fd/fdconfigdata.xml
+
+chromatix_projects:
+- com.qti.tuned.default:
+    - tuning/default_c7project
+
+# - com.qti.tuned.semco_s5k3m5:
+#     - tuning/sm8250_semco_s5k3m5
+
+# - com.qti.tuned.sunny_imx519:
+#     - tuning/sm8250_sunny_imx519
+
+# - com.qti.tuned.truly_imx476:
+#     - tuning/sm8250_truly_imx476
+
+# - com.qti.tuned.sunny_s5k5e9yu05:
+#     - tuning/sm8250_sunny_s5k5e9yu05
+
+# - com.qti.tuned.liteon_imx362:
+#     - tuning/sm8250_liteon_imx362
+
+# - com.qti.tuned.semco_imx586:
+#     - tuning/sm8250_semco_imx586
+
+# - com.qti.tuned.semco_imx481:
+#     - tuning/sm8250_semco_imx481
+
+# - com.qti.tuned.ofilm_imx563:
+#     - tuning/sm8250_ofilm_imx563
+
+# - com.qti.tuned.truly_ov8856:
+#     - tuning/sm8250_truly_ov8856
+
+# - com.qti.tuned.amtran_imx317:
+#     - tuning/sm8250_amtran_imx317
+
+# - com.qti.tuned.cmk_ov9282:
+#     - tuning/ov9282_mono_c7project

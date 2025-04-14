@@ -1,0 +1,107 @@
+======================================================
+camera
+======================================================
+https://www.cnblogs.com/schips/p/qualcomm_camx_bring_up_sensor.html
+https://blog.csdn.net/wjky2014/article/details/129457539
+https://docs.kernel.org/admin-guide/media/qcom_camss.html
+https://www.kernel.org/doc/html/v5.0/media/v4l-drivers/qcom_camss.html
+
+1.Camera Sensor Driver Bring-up Guide (80-P9301-97)
+2.Qualcomm Spectra Linux Camera Debugging User Guide (80-P9301-61)
+
+https://source.android.com/docs/automotive/evs/camera_system
+https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2023.1301019/full
+/media/bruno/T7/devkit.back/LA.VENDOR.13.2.2/LINUX/android/vendor/qcom/proprietary/chi-cdk
+IMX471 sensor
+
+…/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/buildbins/build/android/binary_kona/com.qti.sensormodule.altek1_imx577.mk
+LINUX/android/vendor/qcom/proprietary/chi-cdk/./oem/qcom/sensor/imx577/imx577_sensor.xml
+LINUX/android/vendor/qcom/proprietary/chi-cdk/./oem/qcom/module/altek1_imx577_module.xml
+
+On Android:
+/vendor/lib/camera/com.qti.sensormodule.altek1_imx577.bin (see second picture).
+
+http://devicetree.org/schemas/media/i2c/sony,imx577.yaml
+ncf_pack_imx471.ncf
+
+=========================================================================
+Modified files
+=========================================================================
+cp /media/bruno/T7/VR/vendor/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/module/sunny_imx471_module_3.xml /media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/module
+cp -r /media/bruno/T7/VR/vendor/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/tuning/sm8250_sunny_imx471 /media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/tuning
+cp -r /media/bruno/T7/VR/vendor/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/sensor/imx471_3 /media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/qcom/sensor
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/oem/Android.mk
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/configs/product.mk
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/tools/buildbins/buildbins_kona.yaml
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/vendor/qcom/proprietary/chi-cdk/tools/buildbins/buildbins.yaml
+
+=========================================================================
+Build output
+=========================================================================
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/out/target/product/kona/vendor/lib/camera/com.qti.sensor.imx471_2.so
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/out/target/product/kona/vendor/lib/camera/com.qti.sensor.imx471_3.so
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/out/target/product/kona/vendor/lib/camera/com.qti.sensormodule.sunny_imx471_2.bin
+/media/bruno/T7/devkit-1.1-FC/LINUX/android/out/target/product/kona/vendor/lib/camera/com.qti.sensormodule.sunny_imx471_2.bin
+
+=========================================================================
+BUILD
+=========================================================================
+./turbox_build.sh -a -l -v userdebug ## -c == clean
+./turbox_build.sh -u -v userdebug
+./turbox_build.sh --zip_flat_build -l -v userdebug
+
+
+--dont-test-system
+--dont-equalize-array
+=========================================================================
+ANDROID
+=========================================================================
+adb shell dumpsys media.camera
+
+=========================================================================
+DEBUG
+=========================================================================
+adb shell “echo 0x1FF > /sys/module/cam_debug_util/parameters/debug_mdl”
+
+=======
+
+CONFIG_MSM_CAMERA_DT_DEBUG
+CONFIG_MSMB_CAMERA_DEBUG
+
+1.3.1 Sensor Raw dump
+	adb root
+	adb remount
+	adb shell setprop persist.vendor.camera.autoImageDump 1
+	adb shell setprop persist.vendor.camera.autoImageDumpMask 0x1
+	// IFE Node
+	adb shell setprop persist.vendor.camera.autoImageDumpIFEoutputPortMask 0xFB8
+	// IFE AllRawOutput
+	adb shell setprop persist.vendor.camera.offlineImageDumpOnly 0
+	adb shell setprop persist.vendor.camera.reprocessDump 0
+	adb reboot
+
+1.4 Dump files location and name
+	Dump files location (Android P and later): /data/vendor/camera
+	Dump files name info (OEM may change the name format)
+
+cd /data/user/0/com.thundercomm.thundersoftmulticamera/files/rawdata
+
+1) Click about ten times on ‘Version Info’ label in camera App Settings to enable Developer
+Options.
+
+
+AM_INFO: CAM-SENSOR: cam_sensor_driver_cmd: 960 Probe success,slot:3,slave_addr:0x20,sensor_id:0x577
+AM_INFO: CAM-SENSOR: cam_sensor_driver_cmd: 960 Probe success,slot:4,slave_addr:0x56,sensor_id:0x1704
+
+/sys/bus/i2c/devices/0-0056/name ## i2c_camera
+
+=====================================================
+[ 1041.481117] CAM_ERR: CAM-ISP: cam_ife_csid_cid_reserve: 1049 CSID:3 IPP resource not available
+[ 1041.481123] CAM_ERR: CAM-ISP: cam_ife_csid_cid_reserve: 1049 CSID:2 IPP resource not available
+[ 1041.481161] CAM_INFO: CAM-ISP: cam_ife_hw_mgr_print_acquire_info: 719 Successfully acquire single IFE[1 -1] with [12 pix] [0 pd] [1 rdi] ports for ctx:0
+[ 1041.483864] CAM_INFO: CAM-ISP: cam_vfe_bus_ver3_init_hw: 3649 Overriding clock gating at bus input
+[ 1041.483869] CAM_INFO: CAM-ISP: cam_vfe_top_ver3_init_hw: 249 Disable clock gating at IFE top
+[ 1041.485312] CAM_INFO: CAM-CSIPHY: cam_csiphy_core_cfg: 1200 START_DEV: CSIPHY_IDX: 1, Device_slot: 0, Datarate: 996000000, Settletime: 2200000000
+[ 1041.493308] CAM_INFO: CAM-SENSOR: cam_sensor_driver_cmd: 1136 CAM_START_DEV Success, sensor_id:0x577,sensor_slave_addr:0x20
+[ 1042.476147] init: Received control message 'interface_start' for 'android.hardware.drm@1.0::IDrmFactory/widevine' from pid: 584 (/system/bin/hwservicemanager)
+
